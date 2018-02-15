@@ -43,17 +43,32 @@ bool Screen::init(){
     
     memset(m_buffer, 0, SCREEN_WIDTH*SCREEN_HIEGHT*sizeof(Uint32)); // set all pixels to black
 
-    //set one pixal at a time to WSU crimson
-    for(int i = 0; i< SCREEN_WIDTH*SCREEN_HIEGHT; i++){
-        m_buffer[i] = 0x981E32FF;
-    }
+    return true;
+}
 
+
+void Screen::update(){
     SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32)); 
     SDL_RenderClear(m_renderer);
     SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
     SDL_RenderPresent(m_renderer);
+}
 
-    return true;
+void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
+    Uint32 color = 0;
+
+    //bit shifting to add RBGA values to color.
+    color += red;
+    color <<= 8;
+    color += green;
+    color <<= 8; 
+    color += blue;
+    color <<= 8;
+    color += 0xFF; //the alpha
+
+    //coverting x,y quardinat to an index. y*screen_width will give the colum, and x will give the row.
+    //the result is an index of the specific pixal at (x,y)
+    m_buffer[(y*SCREEN_WIDTH) + x] = color;
 }
 
 bool Screen::processEvents(){
@@ -74,3 +89,4 @@ void Screen::close(){
     SDL_DestroyWindow(m_window);
     SDL_Quit();
 }
+
