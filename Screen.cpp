@@ -55,6 +55,12 @@ void Screen::update(){
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
+    
+    if(x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HIEGHT){ //not a very efficient way to check if pixal is off screen
+        // don't render pixals that are not on the screen
+        return;
+    } 
+    
     Uint32 color = 0;
 
     //bit shifting to add RBGA values to color.

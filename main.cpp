@@ -1,10 +1,14 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "Screen.hpp"
-
 #include <cstdlib>
+#include <time.h>
+// #include <cmath>
+#include "Screen.hpp"
+#include "Swarm.hpp"
 
 int main(int argc, const char * argv[]) {
+
+    srand(time(NULL));
 
     Screen screen;
 
@@ -12,22 +16,29 @@ int main(int argc, const char * argv[]) {
         std::cout << "Error initializing SDL " << std::endl;
     }
 
+    Swarm swarm;
+
     //loop for window
     while (true) {
         //Upadate particles
         //draw particles
-        for(int y=0; y < Screen::SCREEN_HIEGHT; y++){
-            for(int x=0; x < Screen::SCREEN_WIDTH; x++){
-                //geerate random value for each RGR
-                int r = rand()%255;
-                int g = rand()%255;
-                int b = rand()%255;
-                // screen.setPixel(x, y, 128, 0, 255);
-                screen.setPixel(x, y, r,g,b); //creates a cool static TV screen.
-            }
-        }
 
-        screen.setPixel(400, 300, 255, 255, 255);
+        int timeElapsed = SDL_GetTicks(); //time in milliseconds since start
+        // unsigned char used to make sure the value stays within 255;
+        unsigned char green = (1 + sin(timeElapsed * 0.001)) * 128; // *0.001 need to make jumps smoother
+        unsigned char red = (1 + sin(timeElapsed * 0.002)) * 128;
+        unsigned char blue = (1 + sin(timeElapsed * 0.003)) * 128;
+
+        const Partical * const pParticals = swarm.getParticals();
+
+        for(int i = 0; i < Swarm::NUM_PARTICALS; i++){
+            Partical partical = pParticals[i]; // get individual partical one by one.
+
+            int x = (partical.m_xPos + 1) * Screen::SCREEN_WIDTH/2; //make middle of screen the center of the x,y plane
+            int y = (partical.m_yPos + 1) * Screen::SCREEN_HIEGHT/2;
+
+            screen.setPixel(x, y, red, green, blue);
+        }
 
         //Draw the screen
         screen.update();

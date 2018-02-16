@@ -1,5 +1,5 @@
 CC=g++
-SRCS=main.cpp Screen.cpp
+SRCS=main.cpp Screen.cpp Partical.cpp Swarm.cpp
 
 
 sim:
