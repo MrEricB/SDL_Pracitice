@@ -24,12 +24,16 @@ int main(int argc, const char * argv[]) {
         //draw particles
 
         int timeElapsed = SDL_GetTicks(); //time in milliseconds since start
+        screen.clearScreen();
         // unsigned char used to make sure the value stays within 255;
         unsigned char green = (1 + sin(timeElapsed * 0.001)) * 128; // *0.001 need to make jumps smoother
         unsigned char red = (1 + sin(timeElapsed * 0.002)) * 128;
         unsigned char blue = (1 + sin(timeElapsed * 0.003)) * 128;
 
         const Partical * const pParticals = swarm.getParticals();
+
+        swarm.update(); //update all the particals
+    
 
         for(int i = 0; i < Swarm::NUM_PARTICALS; i++){
             Partical partical = pParticals[i]; // get individual partical one by one.

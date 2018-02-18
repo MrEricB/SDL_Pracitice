@@ -14,7 +14,7 @@ public:
     virtual ~Swarm();
 
     const Partical * const getParticals(){ return m_particales;} //const point to const partical retur type
-
+    void update();
 
 };
 

@@ -7,3 +7,9 @@ Swarm::Swarm(){
 Swarm::~Swarm(){
     delete [] m_particales;
 }
+
+void Swarm::update(){
+    for(int i = 0; i < Swarm::NUM_PARTICALS; i++){
+        m_particales[i].update(); //update each partical location
+    }
+}
