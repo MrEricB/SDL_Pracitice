@@ -9,8 +9,8 @@ public: //not best to make public, but makes acsessing the many particals more e
     double m_yPos;
 
     //the speed an individucal  partical will move
-    double m_xspeed;
-    double m_yspeed;
+    double m_speed;
+    double m_direction; // [0-365]
 
 public:
     Partical();

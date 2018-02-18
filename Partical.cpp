@@ -1,13 +1,14 @@
 #include "Partical.hpp"
+#include <math.h> //needed for M_PI, maybe better to use cmath instead of math.h, but quick fix since cmaht doesnt have PI constant
 
+Partical::Partical() {
+    //fix starting postition
+    m_xPos = 0;
+    m_yPos = 0;
 
-Partical::Partical(){
-    //set x, y to random number [-1,1]
-    m_xPos = (2.0 * rand())/RAND_MAX - 1;
-    m_yPos = (2.0 * rand())/RAND_MAX - 1;
-
-    m_xspeed = 0.01 * (((2.0 * rand())/RAND_MAX) - 1); // [0,1];
-    m_yspeed = 0.01 * (((2.0 * rand())/RAND_MAX) - 1);
+    //radnom direction
+    m_direction = (2 * M_PI * rand())/RAND_MAX; //angle
+    m_speed = (0.01 * rand())/RAND_MAX; //speed
 }
 
 Partical::~Partical(){
@@ -15,16 +16,17 @@ Partical::~Partical(){
 }
 
 void Partical::update(){
-    m_xPos += m_xspeed;
-    m_yPos += m_yspeed;
+    double xspeed = m_speed * cos(m_direction);
+    double yspeed = m_speed * sin(m_direction);
 
-    //keep particals from moving off edge of screen
-    if(m_xPos < -1 || m_xPos >= 1){
-        m_xspeed = -m_xspeed;
-    }
-    if(m_yPos < -1 || m_yPos >= 1){
-        m_yspeed = -m_yspeed;
-    }
-    
+    m_xPos += xspeed;
+    m_yPos += yspeed;
 
+    // //keep particals from moving off edge of screen
+    // if(m_xPos < -1 || m_xPos >= 1){
+    //     m_xspeed = -m_xspeed;
+    // }
+    // if(m_yPos < -1 || m_yPos >= 1){
+    //     m_yspeed = -m_yspeed;
+    // }
 }

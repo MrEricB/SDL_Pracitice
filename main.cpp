@@ -18,6 +18,10 @@ int main(int argc, const char * argv[]) {
 
     Swarm swarm;
 
+    //used in widow loop to help determin the center of the screen
+    const int centerX = Screen::SCREEN_WIDTH/2;
+    const int centerY = Screen::SCREEN_HIEGHT/2;
+
     //loop for window
     while (true) {
         //Upadate particles
@@ -33,13 +37,17 @@ int main(int argc, const char * argv[]) {
         const Partical * const pParticals = swarm.getParticals();
 
         swarm.update(); //update all the particals
-    
 
         for(int i = 0; i < Swarm::NUM_PARTICALS; i++){
             Partical partical = pParticals[i]; // get individual partical one by one.
 
-            int x = (partical.m_xPos + 1) * Screen::SCREEN_WIDTH/2; //make middle of screen the center of the x,y plane
-            int y = (partical.m_yPos + 1) * Screen::SCREEN_HIEGHT/2;
+            //make middle of screen the center of the x,y plane
+            //becasuse screen is rectagle, this here is causeing oval explosion rather than circular
+            //basically we have two ranges we are using to map partical to screen.
+            //too fix, only use SCREEN_WIDTH
+            //then to start in the middle. of the screen, shift to top by removing m_ypos +1 then add half screen height, to shift correctl to the middle of the screen.
+            int x = (partical.m_xPos + 1) * centerX; 
+            int y = partical.m_yPos * centerX + centerY;
 
             screen.setPixel(x, y, red, green, blue);
         }

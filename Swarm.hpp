@@ -5,7 +5,7 @@
 
 class Swarm {
 public:
-    const static int NUM_PARTICALS = 2500;
+    const static int NUM_PARTICALS = 1500; //Total number of particals on the screen
 private:
 Partical * m_particales; 
 
